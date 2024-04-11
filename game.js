@@ -50,11 +50,21 @@ function startGame() {
     const mapRowCols = mapRows.map(row => row.trim().split(''))
     console.log(map, mapRows, mapRowCols);
 
-    for (let x = 1; x <= 10; x++) {
-        for (let y = 1; y <= 10; y++) {
-            let posX = elementSize * x + 10 ;
-            let posY = elementSize * y ;
-            game.fillText(emojis[mapRowCols[x - 1][y -1]],posX, posY);
-        }
-    }
+
+    mapRowCols.forEach((row, rowI )=> {
+        row.forEach((col, colI) => {
+            const emoji = emojis[col];
+            let posX = elementSize * (rowI + 1);
+            let posY = elementSize * (colI + 1);
+            game.fillText(emoji, posY, posX);
+        });
+    });
+
+    // for (let x = 1; x <= 10; x++) {
+    //     for (let y = 1; y <= 10; y++) {
+    //         let posX = elementSize * x + 10 ;
+    //         let posY = elementSize * y ;
+    //         game.fillText(emojis[mapRowCols[x - 1][y -1]],posX, posY);
+    //     }
+    // }
 }
