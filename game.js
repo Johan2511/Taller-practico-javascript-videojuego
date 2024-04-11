@@ -68,9 +68,11 @@ function startGame() {
             let posY = elementSize * (rowI + 0.8);
 
             if (col == 'O') {
-                playerPosition.x = posX;
-                playerPosition.y = posY;
-                console.log({playerPosition});
+                if (!playerPosition.x & !playerPosition.y) {
+                    playerPosition.x = posX;
+                    playerPosition.y = posY;
+                    console.log({playerPosition});
+                }
             }
             game.fillText(emoji, posX, posY);
         });
@@ -118,14 +120,20 @@ window.addEventListener('keydown', moveByKeys);
     function moveUp() {
         console.log('Mueve hacia arriba');
         playerPosition.y -= elementSize;
-        movePlayer();
+        startGame();
     };
     function moveLeft() {
         console.log('Mueve hacia la izquierda');
+        playerPosition.x -= elementSize;
+        startGame();
     };
     function moveRight() {
         console.log('Mueve hacia la derecha');
+        playerPosition.x += elementSize;
+        startGame();
     };
     function moveDown() {
         console.log('Mueve hacia abajo');
+        playerPosition.y += elementSize;
+        startGame();
     }
