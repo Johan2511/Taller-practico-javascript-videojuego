@@ -16,6 +16,13 @@ const playerPosition = {
     y: undefined,
 }
 
+const giftPosition = {
+    x: undefined,
+    y: undefined,
+}
+
+let enemyPositions = [];
+
 
 
 function setCanvasSize() {
@@ -37,18 +44,6 @@ function setCanvasSize() {
 
 
 function startGame() {
-    // window.innerHeight
-// window.innerWidth 
-
-// game.fillRect(0, 50, 100, 100);
-// game.clearRect(0, 50, 50, 50);
-// game.clearRect(0, 0, 50, 50);
-// game.clearRect(0, 0, 50, 50);
-
-// game.font = '25px verdana';
-// game.fillStyle = 'purple';
-// game.textAlign = 'end';
-// game.fillText('Platzi', 50, 50)
     console.log({canvasSize, elementSize});;
 
     game.font = (elementSize - 10) + 'px Verdana';
@@ -59,6 +54,7 @@ function startGame() {
     const mapRowCols = mapRows.map(row => row.trim().split(''))
     console.log(map, mapRows, mapRowCols);
 
+    enemyPositions = [];
     game.clearRect(0, 0, canvasSize, canvasSize);
 
     mapRowCols.forEach((row, rowI )=> {
@@ -73,6 +69,14 @@ function startGame() {
                     playerPosition.y = posY;
                     console.log({playerPosition});
                 }
+            } else if (col == 'I') {
+                giftPosition.x = posX;
+                giftPosition.y = posY;
+            } else if (col == 'X') {
+                enemyPositions.push({
+                    x: posX,
+                    y: posY,
+                })
             }
             game.fillText(emoji, posX, posY);
         });
@@ -86,7 +90,28 @@ function startGame() {
     // }
     movePlayer();
 }
+
+
 function movePlayer() {
+const giftCollisionX = playerPosition.x.toFixed(3) == giftPosition.x.toFixed(3);
+const giftCollisionY = playerPosition.y.toFixed(3) == giftPosition.y.toFixed(3);;
+const giftCollision = giftCollisionX && giftCollisionY;
+
+
+    if (giftCollision){
+        console.log('Subiste de nivel!');
+    }
+
+const enemyCollision = enemyPositions.find(enemy => {
+    const enemyCollisionX = enemy.x.toFixed(3) == playerPosition.x.toFixed(3);
+    const enemyCollisionY = enemy.y.toFixed(3) == playerPosition.y.toFixed(3);
+    return enemyCollisionX && enemyCollisionY;
+    
+});
+if (enemyCollision) {
+    console.log('Chocaste con un enemigo');
+}
+
     game.fillText(emojis['PLAYER'], playerPosition.x, playerPosition.y);
 }
 
